@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
+import path from 'path';
 
 /*  this was the fake database before mongodb
 const articlesInfo w= {
@@ -19,7 +20,7 @@ const articlesInfo w= {
 
 
 const app = express();
-
+app.use(express.static(path.join(__dirname,'/build')));
 app.use(bodyParser.json());
 
 
@@ -120,7 +121,9 @@ app.post('/api/articles/:name/add-comment', async (req,res) => {
     
 });
 
-
+app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname +'/build/index.html'));
+});
 
 app.listen(8000, () => console.log('Server is listening on port 8000'));
 
